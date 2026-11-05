@@ -1,0 +1,163 @@
+[
+ {
+  "file": "checks/lean/KuzminHomology/BinomialValuation.lean",
+  "declarations": [
+   "KuzminHomology.BinomialValuation.mod_add_mod_lt_iff",
+   "KuzminHomology.BinomialValuation.add_mod_of_dvd_left",
+   "KuzminHomology.BinomialValuation.add_mod_of_dvd",
+   "KuzminHomology.BinomialValuation.pow_dvd_or_dvd_pow",
+   "KuzminHomology.BinomialValuation.not_dvd_choose_iff_mod",
+   "KuzminHomology.BinomialValuation.forall_mod_le_iff_digits",
+   "KuzminHomology.BinomialValuation.lucas_criterion",
+   "KuzminHomology.BinomialValuation.not_dvd_choose_add",
+   "KuzminHomology.BinomialValuation.not_dvd_choose_add_pow",
+   "KuzminHomology.BinomialValuation.regular_section_single",
+   "KuzminHomology.BinomialValuation.regular_section_double",
+   "KuzminHomology.BinomialValuation.regular_section_top",
+   "KuzminHomology.BinomialValuation.padicValNat_choose_pow",
+   "KuzminHomology.BinomialValuation.dvd_choose_pow_and_not_sq",
+   "KuzminHomology.BinomialValuation.padicValNat_choose_pow_of_eq_mul"
+  ],
+  "book": "Chapter 6, section 5, pp. 327-330, for a prime p: Lemma 5.6 (Lucas's criterion) C_b^a is prime to p iff b_alpha >= a_alpha for all base-p digits (for all a, b); Lemma 5.7: if i - j = p^s, ||i||_p, ||n||_p >= s, i <= n, then C_(n-k)^(i-k) is prime to p for k = j+1, ..., i; Lemma 5.8: the same for i - j = 2p^s, ||n||_p = s, ||(i+j)/2||_p > s; Lemma 5.9: if ||n||_p = s, C_(n-k)^(p^s-k) is prime to p for k = 0, ..., p^s; Lemma 5.12, step of the proof: if ||n||_p = s + 1 (n = p^(s+1) m, (m, p) = 1), then v_p(C_n^(p^s)) = 1, i.e. p divides C_n^(p^s) and p^2 does not.",
+  "limitations": "||n||_p >= s is p^s | n (true for n = 0, matching ||0||_p = infinity), ||n||_p = s is p^s | n and not p^(s+1) | n, ||n||_p = s + 1 in Lemma 5.12 is padicValNat p n = s + 1; the hypotheses ||i||_p = ||j||_p = s of Lemma 5.8 follow from the others and are not assumed. Lemma 5.6 is derived from Kummer's theorem (padicValNat_choose), not from the congruence (6.22), which is not formalized. Not formalized: Lemma 5.4 (pi^n_i acts on the factor Delta^k by C_(n-k)^(i-k)), Corollary 5.5, and the module statements (regular sections, the isomorphisms induced by projections, Coker pi^n_(p^s) = Z_p, the homology in Lemma 5.12); these and the numerical statements for p = 3, 5 are checked in checks/sage/chapter-6b.py (section_5_projections, section_5_lucas, section_5_sections).",
+  "passages": [
+   "lem:lucas",
+   "lem:regular-section-single",
+   "lem:regular-section-double",
+   "lem:regular-section-top",
+   "lem:top-section-homology"
+  ]
+ },
+ {
+  "file": "checks/lean/KuzminHomology/CommutatorPairing.lean",
+  "declarations": [
+   "KuzminHomology.CommutatorPairing.comm_mul_left",
+   "KuzminHomology.CommutatorPairing.comm_mul_right",
+   "KuzminHomology.CommutatorPairing.comm_self",
+   "KuzminHomology.CommutatorPairing.comm_inv",
+   "KuzminHomology.CommutatorPairing.quotient_comm_iff",
+   "KuzminHomology.CommutatorPairing.comm_bilinear",
+   "KuzminHomology.CommutatorPairing.comm_mul_mem",
+   "KuzminHomology.CommutatorPairing.comm_transversal",
+   "KuzminHomology.CommutatorPairing.hminus_mul_left",
+   "KuzminHomology.CommutatorPairing.hminus_mul_right",
+   "KuzminHomology.CommutatorPairing.hminus_self",
+   "KuzminHomology.CommutatorPairing.coboundary_sub_swap",
+   "KuzminHomology.CommutatorPairing.neg_swap_of_alternating",
+   "KuzminHomology.CommutatorPairing.form_skew_not_alternating"
+  ],
+  "book": "Chapter 1, section 8, exercise 3, p. 47: with [x, y] = x^-1 y^-1 x y, the hint [x y, z] = [x, z]^y [y, z] (and [x, y z] = [x, z] [x, y]^z) in every group; if A is central and E/A abelian (equivalently all commutators lie in A), [x, y] is multiplicative in each argument, [x, x] = 1, [y, x]^-1 = [x, y], and [x a, y b] = [x, y] for a, b in A; for a central extension of an abelian G with representatives g -> g-bar and factor system h, [g1-bar, g2-bar] = h(g1, g2) - h(g2, g1), and h^- is bilinear and alternating; with trivial action coboundaries (1.13) are symmetric, so h -> h^- is defined on H^2(G, A). The correction 'alternating' for the printed 'skew-symmetric' (p. 47; Chapter 2, section 4, Corollary 4.2, p. 96): a biadditive alternating function changes sign, but f(m, n) = m n mod 2 on Z x Z with values in Z_2 is biadditive and sign-changing with f(1, 1) != 0.",
+  "limitations": "The extension is a group E with a subgroup A <= Z(E) and a map s: G -> E with s(g1) s(g2) = s(g1 g2) h(g1, g2), h with values in A, G commutative; h^-(g1, g2) is written multiplicatively as h(g2, g1)^-1 h(g1, g2) in E. The construction of the extension from a cocycle, the groups H^2(G, A) and Lambda^2(G, A), the additivity of h -> h^- (evident) and the isomorphism H^2(G, A) = Lambda^2(G, A) for free abelian G (exercise 4, Corollary 4.2 of Chapter 2) are not formalized. The identities are also checked for the normalised cocycles of five groups in checks/sage/chapter-1b.py (section_8), and the counts of sign-changing and alternating forms on Z^2 with values in Z_2 in checks/sage/chapter-2b.py.",
+  "passages": [
+   "exc:commutator-form",
+   "eq:coboundary",
+   "cor:free-abelian-cohomology"
+  ]
+ },
+ {
+  "file": "checks/lean/KuzminHomology/FiniteFieldNonsquare.lean",
+  "declarations": [
+   "KuzminHomology.FiniteFieldNonsquare.ringChar_ne_two",
+   "KuzminHomology.FiniteFieldNonsquare.nsmul_isSquare",
+   "KuzminHomology.FiniteFieldNonsquare.squaresSubfield",
+   "KuzminHomology.FiniteFieldNonsquare.two_mul_card_squares",
+   "KuzminHomology.FiniteFieldNonsquare.coprime_half_succ",
+   "KuzminHomology.FiniteFieldNonsquare.exists_sq_add_sq_not_isSquare",
+   "KuzminHomology.FiniteFieldNonsquare.exists_sq_add_sq_ne_zero_not_isSquare",
+   "KuzminHomology.FiniteFieldNonsquare.isSquare_mul_of_not_isSquare",
+   "KuzminHomology.FiniteFieldNonsquare.exists_sq_add_sq_eq_of_not_isSquare",
+   "KuzminHomology.FiniteFieldNonsquare.sq_add_mul_sq_surjective",
+   "KuzminHomology.FiniteFieldNonsquare.exists_sq_sub_mul_sq_eq_neg_one",
+   "KuzminHomology.FiniteFieldNonsquare.isSquare_sq_add_sq_of_char_two",
+   "KuzminHomology.FiniteFieldNonsquare.exists_sq_add_sq_eq_zero",
+   "KuzminHomology.FiniteFieldNonsquare.printed_condition_insufficient",
+   "KuzminHomology.FiniteFieldNonsquare.zmod_five_example"
+  ],
+  "book": "Chapter 4, section 7, proof of Proposition 7.7, case m = 1, p. 229: for q odd and every fixed e != 0 the form x1^2 + e x2^2 takes every value of F_q (x2 = 0 gives the squares; x1 = 0 gives the non-squares when e is a non-square; for e a square the form reduces to x1^2 + x2^2). If every x1^2 + x2^2 were a square, the squares with 0 would form a subfield with (q + 1)/2 elements, impossible since q and (q + 1)/2 are coprime; so x1^2 + x2^2 lies in F_q^* \\ (F_q^*)^2 for some pair (as corrected; printed: 'not in (F_q^*)^2'), and proportional pairs give the rest of that coset. The printed condition is too weak: for q = 1 mod 4 (e.g. q = 5, 1^2 + 2^2 = 0) it holds at a pair of non-zero elements whose proportional pairs give only 0; for q even every element is a square.",
+  "limitations": "Finite fields F with q = Fintype.card F odd; 'a is a square' is IsSquare a (0 included), (F_q^*)^2 is {a != 0, IsSquare a}. The book's argument is followed: the squares form a subfield under the contrary hypothesis, there are (q + 1)/2 of them (counted with the quadratic character), and the step 'the order of the subfield divides q', left implicit in the book, is Lagrange's theorem for the additive groups. The form is also stated as alpha^2 - d beta^2 = -1 for d != 0 (d = b_k^2), the shape of the factors of det c. Not formalized: the reduction of det c = -1 for c of the form (eq:negacyclic-matrix) to these factors (eigenvectors u_k, 2 x 2 blocks, det c = prod (alpha_k^2 - b_k^2 beta_k^2), independence of alpha_k, beta_k), the case of odd m > 1 and the rest of Proposition 7.7; these are checked numerically in checks/sage/chapter-4b.py (section_7_psl_construction, section_7_negacyclic, section_7_forms).",
+  "passages": [
+   "prop:psl-irreducible-c-group"
+  ]
+ },
+ {
+  "file": "checks/lean/KuzminHomology/FoxFundamental.lean",
+  "declarations": [
+   "KuzminHomology.FoxFundamental.SemiProd.instGroup",
+   "KuzminHomology.FoxFundamental.SemiProd.grpHom",
+   "KuzminHomology.FoxFundamental.IsDerivation.map_one",
+   "KuzminHomology.FoxFundamental.IsDerivation.map_inv",
+   "KuzminHomology.FoxFundamental.IsDerivation.ext",
+   "KuzminHomology.FoxFundamental.IsDerivation.sum_mul_left",
+   "KuzminHomology.FoxFundamental.isDerivation_sub_one",
+   "KuzminHomology.FoxFundamental.embed",
+   "KuzminHomology.FoxFundamental.embed_grp",
+   "KuzminHomology.FoxFundamental.fox",
+   "KuzminHomology.FoxFundamental.embed_apply",
+   "KuzminHomology.FoxFundamental.fox_mul",
+   "KuzminHomology.FoxFundamental.isDerivation_fox",
+   "KuzminHomology.FoxFundamental.fox_of",
+   "KuzminHomology.FoxFundamental.fox_of_self",
+   "KuzminHomology.FoxFundamental.fox_of_ne",
+   "KuzminHomology.FoxFundamental.fox_one",
+   "KuzminHomology.FoxFundamental.fox_inv",
+   "KuzminHomology.FoxFundamental.fox_of_inv_self",
+   "KuzminHomology.FoxFundamental.fox_of_inv_ne",
+   "KuzminHomology.FoxFundamental.eq_fox",
+   "KuzminHomology.FoxFundamental.fox_identity",
+   "KuzminHomology.FoxFundamental.fox_identity_values",
+   "KuzminHomology.FoxFundamental.fox_pow",
+   "KuzminHomology.FoxFundamental.fox_commutator_left",
+   "KuzminHomology.FoxFundamental.fox_commutator_right"
+  ],
+  "book": "Chapter 1, section 9, pp. 50-51: the Fox derivatives dv/dx_i of v in the free group F on x_1, ..., x_n, defined by v(x_1 e_1, ..., x_n e_n) = v(x_1, ..., x_n) e_1^(dv/dx_1) ... e_n^(dv/dx_n) in the semidirect product F P (P the free right ZF-module on e_i); the right derivation rule (1.28) d(vw)/dx_i = (dv/dx_i) w + dw/dx_i for all v, w; d(u^-1)/dx_i = -(du/dx_i) u^-1; (1.25), (1.26) on generators and their inverses; (1.23) dx^n/dx = x^(n-1) + ... + 1; (1.24) d[x_1, x_2]/dx_1 = x_2 - [x_1, x_2], d[x_1, x_2]/dx_2 = 1 - x_2^-1 x_1 x_2 (corrected form); uniqueness of a derivation with given values on generators; the Fox identity (1.29) v - 1 = sum (x_i - 1) dv/dx_i (factors x_i - 1 on the left, as the right-derivation convention requires) by the book's argument, and its image (1.30) v(g_1, ..., g_n) - 1 = sum (g_i - 1) dv/dg_i under any homomorphism F -> G, which is also the display of chapter 3, section 6, p. 153 (sum (y_i - 1) dv/dy_i = v - 1).",
+  "limitations": "F = FreeGroup alpha with a finite type alpha for the sums (Fin n for x_1, ..., x_n), ZF = MonoidAlgebra Z F, P = alpha -> ZF with right multiplication; dv/dg_i is the image of dv/dx_i under the ring homomorphism ZF -> ZG induced by F -> G. Not formalized: formula (1.27) for an arbitrary semidirect product G A, Proposition 9.1 and the other propositions and exercises of section 9, the freeness of the augmentation ideal on the x_i - 1 (uniqueness of the coefficients in (1.29)), the Magnus embedding and the criteria (3.27), (3.28). The derivatives, both computations of them, (1.28), (1.29), (1.30) are also checked on random words in checks/sage/chapter-1b.py, the identity on free generators of subgroups in checks/sage/chapter-2a.py.",
+  "passages": [
+   "eq:fox-power",
+   "eq:fox-commutator",
+   "eq:fox-generators",
+   "eq:fox-inverses",
+   "eq:fox-derivation",
+   "eq:fox-identity",
+   "eq:fox-identity-values"
+  ]
+ },
+ {
+  "file": "checks/lean/KuzminHomology/H2FiniteExponent.lean",
+  "declarations": [
+   "KuzminHomology.H2FiniteExponent.isCocycle_coboundary",
+   "KuzminHomology.H2FiniteExponent.coboundary_psi",
+   "KuzminHomology.H2FiniteExponent.card_smul_eq_coboundary",
+   "KuzminHomology.H2FiniteExponent.exists_coboundary_eq_of_uniquelyDivisible"
+  ],
+  "book": "Chapter 1, section 8, Proposition 8.5, p. 45: for a finite group G of order n and a (right) G-module A, every function h: G x G -> A with the cocycle identity (1.12) h(g1, g2) g3 - h(g1, g2 g3) + h(g1 g2, g3) - h(g2, g3) = 0 gives psi(g) = sum_x h(x, g) (the proof's phi(t) = h(sigma - n, t) at t = g - 1 for a normalised cocycle) with delta psi = n h for the coboundary (1.13) delta phi(g1, g2) = phi(g1) g2 - phi(g1 g2) + phi(g2), so n kills H^2(G, A); coboundaries (1.13) satisfy (1.12). Corollary 8.6, p. 46: if every a in A is n c for exactly one c (the meaning of 'one can divide by n' fixed in section 7), every cocycle is a coboundary.",
+  "limitations": "Identities of functions G -> A and G -> G -> A, for every cocycle (normalised or not); the right action is a DistribMulAction of the opposite group on an additive commutative group. The groups Z^2, B^2, H^2 are not built; the dictionary of Proposition 8.1 between cocycles and maps Delta_G (x) Delta_G -> A, in which the book writes the proof, is not formalized (the proof's phi is matched to psi by phi(g - 1) = sum_x h(x, g) for normalised h, stated in the header); the splitting of extensions in Corollary 8.6 is not covered. delta psi = n h is also checked on generators of the normalised cocycles of twelve pairs (G, A) in checks/sage/chapter-1b.py (section_8).",
+  "passages": [
+   "prop:h2-finite-exponent",
+   "eq:cocycle-identity",
+   "eq:coboundary",
+   "cor:h2-divisible-vanishes"
+  ]
+ },
+ {
+  "file": "checks/lean/KuzminHomology/TorsionFreeQuotient.lean",
+  "declarations": [
+   "KuzminHomology.TorsionFreeQuotient.smulTop",
+   "KuzminHomology.TorsionFreeQuotient.smulTopMap",
+   "KuzminHomology.TorsionFreeQuotient.smulTopMap_apply",
+   "KuzminHomology.TorsionFreeQuotient.smulTopMap_bijective",
+   "KuzminHomology.TorsionFreeQuotient.map_smulTopMap",
+   "KuzminHomology.TorsionFreeQuotient.quotientEquiv",
+   "KuzminHomology.TorsionFreeQuotient.quotientEquiv_mk",
+   "KuzminHomology.TorsionFreeQuotient.isSMulRegular_of_ne_zero",
+   "KuzminHomology.TorsionFreeQuotient.factorial_div_two_mul_two",
+   "KuzminHomology.TorsionFreeQuotient.lkEquiv",
+   "KuzminHomology.TorsionFreeQuotient.smulTop_zero_counterexample"
+  ],
+  "book": "Chapter 5, section 7, end of the proof of Theorem 7.1, p. 292: since Lambda^k ^ P_G (and Lambda^k ^ P_G / Lambda^(k+1)) are torsion-free, s Lambda^k ^ P_G / s t Lambda^(k+1) = Lambda^k ^ P_G / t Lambda^(k+1) for any s and t, hence L_k = (1/2)(k+1)! Lambda^k ^ P_G / (k+1)! Lambda^(k+1) = Lambda^k ^ P_G / 2 Lambda^(k+1); the isomorphism is multiplication by s.",
+  "limitations": "For a module M over any ring R (abelian groups: R = Z; B-modules: R = ZB), a submodule N and integers s, t with multiplication by s injective on M (in particular M torsion-free and s != 0): multiplication by s induces an R-linear isomorphism M / tN = sM / stN (sM = s . top, stN regarded inside sM), sending the class of m to the class of s m; and the book's case s = (1/2)(k+1)!, t = 2, k >= 1. 'Any s' needs s != 0 (counterexample s = 0, M = N = Z, t = 2 included); t is arbitrary and the torsion-freeness of M/N is not used. Not formalized: the identification of L_k with sM / stN for the modules of the book (the embedding Lambda^(k+1) in Lambda^k ^ P_G, the torsion-freeness of Lambda^k ^ P_G, the exact sequence (eq:pk0-sequence)), the module R^k and the commutativity of the last diagram, whose ranks are checked numerically in checks/sage/chapter-5b.py (section_7).",
+  "passages": [
+   "th:abelian-kernel-d2",
+   "eq:pk0-sequence"
+  ]
+ }
+]
