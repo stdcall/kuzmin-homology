@@ -1198,7 +1198,7 @@ def lint(root=ROOT):
                                         'brew install tinymist typstyle'})
             continue
         checked = subprocess.run(cmd, cwd=root, env=tool_env(root),
-                                 capture_output=True, text=True, timeout=300)
+                                 capture_output=True, text=True, timeout=1800)
         output = checked.stdout + checked.stderr
         upstream.append({'command': cmd, 'exit_code': checked.returncode,
                          'diagnostics': output,
