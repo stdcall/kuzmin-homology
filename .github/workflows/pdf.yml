@@ -9,7 +9,7 @@ permissions:
 jobs:
   check:
     runs-on: ubuntu-24.04
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -43,7 +43,17 @@ jobs:
           with open(os.environ['GITHUB_PATH'], 'a') as stream:
               stream.write(str(target)+'\n')
       - name: Check and build
-        run: uv run --locked python scripts/project.py check
+        # The full build needs more memory than the runner has: add swap.
+        run: |
+          set -euo pipefail
+          check_swap="$RUNNER_TEMP/kuzmin-homology.swap"
+          sudo fallocate -l 8G "$check_swap"
+          sudo chmod 600 "$check_swap"
+          sudo mkswap "$check_swap"
+          sudo swapon "$check_swap"
+          trap 'sudo swapoff "$check_swap"; sudo rm -f "$check_swap"' EXIT
+          free -h
+          /usr/bin/time -v uv run --locked python scripts/project.py check
       - name: Checksums of the published PDFs
         working-directory: build
         run: |
