@@ -165,13 +165,25 @@ def homology_invariants(C, n):
 
 
 def free_rank_of(K):
-    """(number of generators, number of relators) of a simplified
-    presentation of the subgroup K of a finitely presented group."""
-    f = gap('function(K) local H; H := SimplifiedFpGroup(Image('
-            'IsomorphismFpGroup(K))); return [Length(GeneratorsOfGroup(H)), '
+    """(number of generators, number of relators) of a Tietze-simplified
+    Reidemeister-Schreier presentation of the subgroup K of finite index in
+    a finitely presented group (GAP core only, whatever packages are
+    loaded)."""
+    f = gap('function(K) local P, H; '
+            'P := PresentationSubgroup(Parent(K), K); '
+            'TzOptions(P).printLevel := 0; TzGoGo(P); '
+            'H := FpGroupPresentation(P); '
+            'return [Length(GeneratorsOfGroup(H)), '
             'Length(RelatorsOfFpGroup(H))]; end')
     r = f(K)
     return int(r[0]), int(r[1])
+
+
+def commutator_subgroup(G):
+    """G' as the kernel of the maximal abelian quotient of the finitely
+    presented group G (finite index here), a subgroup of G given by a coset
+    table."""
+    return gap('G -> Kernel(MaximalAbelianQuotient(G))')(G)
 
 
 # ---------------------------------------------------------------------------
@@ -823,7 +835,7 @@ def section_8():
         rk, rel = free_rank_of(K)
         check(rel == 0, 'SL_2(Z): Gamma(%d) is free' % N)
         chis.append(Fraction(1 - rk, k))
-    D = G.DerivedSubgroup()
+    D = commutator_subgroup(G)
     rk, rel = free_rank_of(D)
     check(rel == 0 and rk == 2 and int(G.Index(D)) == 12,
           'SL_2(Z): the commutator subgroup is free of rank 2, index 12')
@@ -847,7 +859,7 @@ def section_8():
                 G = gap('Fa / [Fa.1^%d, Fa.2^%d, Fa.1^%d * Fa.2^-%d]'
                         % (k, m, s, t))
                 chi = Fraction(1, k) + Fraction(1, m) - Fraction(1, l)
-                D = G.DerivedSubgroup()
+                D = commutator_subgroup(G)
                 idx = int(G.Index(D))
                 check(idx == k * m // l,
                       'Z_%d *_Z_%d Z_%d: |G_ab| = km/l' % (k, l, m))
@@ -924,7 +936,7 @@ def section_8():
           'ex. 3.8.6: z -> -1/z has order 2, z -> 1 - 1/z order 3 in PSL_2')
     gap('Fm := FreeGroup(2)')
     G = gap('Fm / [Fm.1^2, Fm.2^3]')
-    D = G.DerivedSubgroup()
+    D = commutator_subgroup(G)
     rk, rel = free_rank_of(D)
     check(rel == 0 and rk == 2 and int(G.Index(D)) == 6 and
           Fraction(1 - rk, 6) == Fraction(-1, 6),
